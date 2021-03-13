@@ -2,6 +2,8 @@ import flask
 import pypinyin
 import bs4
 import re
+import pdfkit
+import io
 
 index_html = open(r".\static\index.html", encoding="utf-8").read()
 raw_html = open(r".\static\print.html", encoding="utf-8").read()
@@ -27,6 +29,7 @@ def new_tag(html: str = ""):
 
 class 看音写词:
     soup = None
+    pdf = None
 
     def __init__(self, 词列表, title="看音写词"):
         def pinyin(词):
@@ -69,6 +72,14 @@ class 看音写词:
             self.soup
         )
 
+    def get_pdf(self):
+        if self.soup is None:
+            self.pdf = pdfkit.from_string(
+                self.get_html(),
+                False
+            )
+        return self.pdf
+
 
 app = flask.Flask(__name__, static_url_path='')
 app.config['JSON_AS_ASCII'] = False
@@ -79,16 +90,25 @@ def index():
     return index_html
 
 
-@app.route('/pinyin', methods=['POST'])
-def get_pinyin_html():
-    return 看音写词(
+@app.route('/pdf', methods=['POST'])
+def pdf():
+    title = flask.request.form["title"] if flask.request.form["title"] != "" else "看音写词"
+    看音写词obj = 看音写词(
         词列表=re.sub(
             r"\\.",
             " ",
             repr(flask.request.form["content"])[1:-1]
         ).split(" "),
-        title=flask.request.form["title"] if flask.request.form["title"] != "" else "看音写词"
-    ).get_html()
+        title=title
+    )
+
+    return flask.send_file(
+        io.BytesIO(
+            看音写词obj.get_pdf()
+        ),
+        attachment_filename=f"{title}.pdf",
+        mimetype="application/pdf"
+    )
 
 
 if __name__ == '__main__':

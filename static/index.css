@@ -24,7 +24,7 @@ body {
 }
 
 
-textarea {
+#title, #words {
     border: none;
     outline: none;
     resize: none;
@@ -41,7 +41,7 @@ textarea {
     transition: box-shadow .1s;
 }
 
-textarea:focus {
+#title:focus, #words:focus {
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.16), 0 3px 3px 0 rgba(0, 0, 0, 0.23) !important;
 }
 
