@@ -1,0 +1,107 @@
+html {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0;
+    margin: 0;
+}
+
+#edit {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+
+    background-color: #ededed;
+}
+
+
+textarea {
+    border: none;
+    outline: none;
+    resize: none;
+
+    -webkit-appearance: none;
+
+    padding: 16px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+
+    box-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+    border-radius: 0;
+
+    transition: box-shadow .1s;
+}
+
+textarea:focus {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.16), 0 3px 3px 0 rgba(0, 0, 0, 0.23) !important;
+}
+
+#words {
+    flex: 1;
+}
+
+#print-button {
+    padding: 12px;
+
+    float: right;
+    border: none;
+    outline: none;
+
+    background-color: #6002EE;
+    color: white;
+    font-size: .875rem;
+
+    position: relative;
+    overflow: hidden;
+}
+
+h1 {
+    display: inline-block;
+    margin: 1em;
+}
+
+#text {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.question {
+    font-size: 25px;
+    margin: 1em;
+}
+
+.pinyin {
+    text-align: center;
+    margin: 0 0 1em;
+}
+
+.kuohao {
+    margin: 0;
+}
+
+@media (min-width: 1000px) {
+    #edit {
+        padding: 24px;
+    }
+}
+
+@media not print {
+    #text-paper {
+        display: none;
+    }
+}
+
+@media print {
+    #edit {
+        display: none;
+    }
+}
