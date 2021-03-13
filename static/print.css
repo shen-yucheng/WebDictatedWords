@@ -4,7 +4,7 @@ h1 {
 
 .question {
     display: inline-block;
-    font-size: 20px;
+    font-size: 25px;
     margin: 1em;
 }
 
@@ -15,9 +15,4 @@ h1 {
 
 .kuohao {
     margin: 0;
-}
-
-@page {
-    size: auto; /* 设置纸张大小 */
-    margin: 0mm auto; /* 设置打印的边距 */
 }
