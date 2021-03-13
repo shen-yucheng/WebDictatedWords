@@ -1,12 +1,10 @@
 import flask
 import pypinyin
 import bs4
+import re
 
-app = flask.Flask(__name__, static_url_path='')
-app.config['JSON_AS_ASCII'] = False
-
-with open(r".\static\index.html", encoding="utf-8") as file:
-    index_html = file.read()
+index_html = open(r".\static\index.html", encoding="utf-8").read()
+raw_html = open(r".\static\print.html", encoding="utf-8").read()
 
 
 def new_tag(html: str = ""):
@@ -30,7 +28,7 @@ def new_tag(html: str = ""):
 class 看音写词:
     soup = None
 
-    def __init__(self, 词列表):
+    def __init__(self, 词列表, title="看音写词"):
         def pinyin(词):
             try:
                 每个字的拼音 = iter(
@@ -46,12 +44,20 @@ class 看音写词:
                 return ""
 
         self.pinyin_dict = {每个词: pinyin(每个词) for 每个词 in 词列表}
+        self.title = title
 
     def get_html(self):
         if self.soup is None:
-            self.soup = new_tag()
+            self.soup = bs4.BeautifulSoup(raw_html, "lxml")
 
-            # 添加每道题
+            # 添加标题
+            self.soup.append(
+                new_tag(
+                    rf"<h1>{self.title}</h1>"
+                )
+            )
+
+            # 添加题目
             for each_pinyin in self.pinyin_dict:
                 self.soup.append(
                     new_tag(
@@ -64,6 +70,10 @@ class 看音写词:
         )
 
 
+app = flask.Flask(__name__, static_url_path='')
+app.config['JSON_AS_ASCII'] = False
+
+
 @app.route('/', methods=['get'])
 def index():
     return index_html
@@ -72,7 +82,12 @@ def index():
 @app.route('/pinyin', methods=['POST'])
 def get_pinyin_html():
     return 看音写词(
-        词列表=flask.request.form["content"].split(" "),
+        词列表=re.sub(
+            r"\\.",
+            " ",
+            repr(flask.request.form["content"])[1:-1]
+        ).split(" "),
+        title=flask.request.form["title"] if flask.request.form["title"] != "" else "看音写词"
     ).get_html()
 
 

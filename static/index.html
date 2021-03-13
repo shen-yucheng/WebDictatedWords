@@ -18,8 +18,6 @@
             src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
     ></script>
 
-    <script src="jquery.js"></script>
-
     <link href="index.css" rel="stylesheet">
     <link href="shadow.css" rel="stylesheet">
     <script defer src="index.js"></script>
@@ -27,25 +25,17 @@
     <title>生成看音写词</title>
 </head>
 <body>
-    <div id="edit">
+    <form action="./pinyin" id="edit" method="post" target="_blank">
         <textarea
                 id="title"
+                name="title"
                 oninput="change_title()"
                 placeholder="标题"></textarea>
-        <textarea id="words" placeholder="内容，用空格分割每个词，如“文件 编辑 视图”"></textarea>
+        <textarea id="words" name="content" placeholder="内容，用空格分割每个词，如“文件 编辑 视图”"></textarea>
         <div id="button-bar">
-            <button class="mdui-ripple mdui-ripple-white z-index-1" id="print-button" onclick="request()">应用更改并打印</button>
+            <button class="mdui-ripple mdui-ripple-white z-index-1" id="print-button" onclick="request()">应用更改并打印
+            </button>
         </div>
-
-    </div>
-    <div id="text-paper">
-        <h1>看音写词</h1>
-        <div id="text">
-            <div>
-                <p class="pinyin"></p>
-                <p class="kuohao"></p>
-            </div>
-        </div>
-    </div>
+    </form>
 </body>
 </html>
