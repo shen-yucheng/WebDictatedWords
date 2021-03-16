@@ -25,13 +25,13 @@
     <title>生成看音写词</title>
 </head>
 <body>
-<form action="./pdf" id="edit" method="post" target="_blank">
-    <input
+<form action="./zip" id="edit" method="post">
+    <input required
             id="title"
             name="title"
             oninput="change_title()"
             placeholder="标题">
-    <textarea id="words" name="content" placeholder="内容，用空格分割每个词，如“文件 编辑 视图”"></textarea>
+    <textarea required id="words" name="content" placeholder="内容，用空格分割每个词，如“文件 编辑 视图”"></textarea>
     <div id="button-bar">
         <button class="mdui-ripple mdui-ripple-white z-index-1" id="print-button" onclick="request()">应用更改并打印
         </button>
