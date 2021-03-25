@@ -4,13 +4,7 @@ import silent_words_test
 app = flask.Flask(__name__, static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
-index_html = open(r".\static\index.html", encoding="utf-8").read()
 raw_html = open(r".\static\print.html", encoding="utf-8").read()
-
-
-@app.route('/', methods=['get'])
-def index():
-    return index_html
 
 
 @app.route('/zip', methods=['POST'])
@@ -26,7 +20,4 @@ def get_pdf():
 
 
 if __name__ == '__main__':
-    app.run(
-        host="192.168.1.7",
-        port=80,
-    )
+    app.run()
